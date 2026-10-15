@@ -64,6 +64,26 @@
                 android:resource="@xml/method" />
         </service>
 
+        <!-- Quick Settings tile that opens the keyboard picker (Samsung Keyboard has no switch button). -->
+        <service
+            android:name=".KeyboardTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_keyboard_tile"
+            android:label="Sticker keyboard"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".PickKeyboardActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@style/Theme.Stickers.Transparent" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.files"

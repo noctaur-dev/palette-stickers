@@ -136,8 +136,10 @@ class MainActivity : Activity() {
                 "Apps like Messenger turn shared images into photos (transparency becomes black). " +
                     "Stickers sent from a keyboard stay stickers — so this app includes one.\n\n" +
                     (if (enabled) "It's turned on. " else "1. Turn on \"Palette Stickers\" on the next screen.\n2. ") +
-                    "In any chat, tap the keyboard-switch button (bottom corner of the screen) and pick " +
-                    "Palette Stickers. Tap a sticker to send it; tap the keyboard icon to switch back.",
+                    "To switch: pull down Quick Settings, tap the pencil/edit button and add the " +
+                    "\"Sticker keyboard\" tile. In any chat, tap the tile and pick Palette Stickers " +
+                    "(Gboard users can also use Gboard's switch button). Tap a sticker to send it; " +
+                    "tap the keyboard icon at its top-left to switch back.",
             )
             .setPositiveButton(if (enabled) "Switch keyboard now" else "Turn it on") { _, _ ->
                 if (enabled) {
