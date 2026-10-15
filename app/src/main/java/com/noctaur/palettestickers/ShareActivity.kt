@@ -44,8 +44,12 @@ class ShareActivity : Activity() {
             val msgs = packs.map { r ->
                 r.fold(
                     { (pack, files) ->
-                        val (p, added) = Library.importPack(pack, files)
-                        "Imported ${p.name} ($added new)"
+                        if (Licensing.canImport(this, pack.id)) {
+                            val (p, added) = Library.importPack(pack, files)
+                            "Imported ${p.name} ($added new)"
+                        } else {
+                            "Skipped ${pack.name} — unlock Peelbox Unlimited for more than ${Licensing.FREE_PACKS} packs"
+                        }
                     },
                     { "Couldn't import pack: ${it.message}" },
                 )

@@ -155,7 +155,9 @@ object Dialogs {
             .setItems(labels) { _, which ->
                 picked = true
                 if (which == 0) {
-                    prompt(a, "New pack", "", "Pack name", onCancel) { name -> onPick(Library.create(name)) }
+                    Licensing.requestNewPack(a, onDenied = onCancel) {
+                        prompt(a, "New pack", "", "Pack name", onCancel) { name -> onPick(Library.create(name)) }
+                    }
                 } else {
                     onPick(packs[which - 1])
                 }

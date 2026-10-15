@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView
 import java.io.File
 
 /**
- * "Palette Stickers" keyboard. Apps like Messenger only treat an image as a *sticker*
+ * Peelbox keyboard. Apps like Messenger only treat an image as a *sticker*
  * (transparent, no bubble) when a keyboard sends it — sharing an image always makes it a photo.
  * So this keyboard sends your stickers exactly the way the Samsung Keyboard does.
  */
@@ -75,7 +75,7 @@ class StickerKeyboard : InputMethodService() {
             gravity = Gravity.CENTER
             alpha = 0.7f
             setPadding(ui.dp(24), 0, ui.dp(24), 0)
-            text = "No stickers yet — open Palette Stickers and add some."
+            text = "No stickers yet — open Peelbox and add some."
             visibility = View.GONE
         }
         val body = android.widget.FrameLayout(ui).apply {

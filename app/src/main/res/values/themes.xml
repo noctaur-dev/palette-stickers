@@ -1,6 +1,9 @@
 <resources>
     <!-- DeviceDefault = One UI's own look on Samsung; DayNight follows the system dark mode. -->
-    <style name="Theme.Stickers" parent="@android:style/Theme.DeviceDefault.DayNight" />
+    <style name="Theme.Stickers" parent="@android:style/Theme.DeviceDefault.DayNight">
+        <!-- Targeting Android 15 forces edge-to-edge; this app uses the classic action bar layout. -->
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+    </style>
 
     <style name="Theme.Stickers.Transparent">
         <item name="android:windowIsTranslucent">true</item>

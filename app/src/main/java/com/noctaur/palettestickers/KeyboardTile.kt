@@ -18,7 +18,7 @@ class KeyboardTileService : TileService() {
     override fun onStartListening() {
         qsTile?.apply {
             state = Tile.STATE_INACTIVE
-            label = "Sticker keyboard"
+            label = "Peelbox keyboard"
             updateTile()
         }
     }
@@ -47,7 +47,7 @@ class PickKeyboardActivity : Activity() {
         super.onCreate(savedInstanceState)
         val imm = getSystemService(InputMethodManager::class.java)
         if (imm.enabledInputMethodList.none { it.packageName == packageName }) {
-            Dialogs.toast(this, "Turn on \"Palette Stickers\" here first")
+            Dialogs.toast(this, "Turn on \"${getString(R.string.app_name)}\" here first")
             startActivity(Intent(Settings.ACTION_INPUT_METHOD_SETTINGS))
             finish()
         }

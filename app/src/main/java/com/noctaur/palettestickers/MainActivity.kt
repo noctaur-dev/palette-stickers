@@ -79,6 +79,7 @@ class MainActivity : Activity() {
             .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         menu.add(0, M_IMPORT, 1, "Import .stickerpack")
         menu.add(0, M_EXPORT_ALL, 2, "Export all + catalog…")
+        if (!Licensing.isUnlocked(this)) menu.add(0, M_UNLOCK, 0, "Peelbox Unlimited…")
         menu.add(0, M_KEYBOARD, 3, "Sticker keyboard setup")
         menu.add(0, M_ABOUT, 4, "How to add stickers")
         return true
@@ -86,8 +87,8 @@ class MainActivity : Activity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            M_NEW -> Dialogs.prompt(this, "New pack", "", "Pack name") { name ->
-                open(Library.create(name))
+            M_NEW -> Licensing.requestNewPack(this) {
+                Dialogs.prompt(this, "New pack", "", "Pack name") { name -> open(Library.create(name)) }
             }
             M_IMPORT -> startActivityForResult(
                 Intent(Intent.ACTION_OPEN_DOCUMENT)
@@ -104,6 +105,7 @@ class MainActivity : Activity() {
                 }
             }
             M_KEYBOARD -> keyboardSetup()
+            M_UNLOCK -> Licensing.offerUnlock(this, onUnlocked = { invalidateOptionsMenu() })
             M_ABOUT -> android.app.AlertDialog.Builder(this)
                 .setTitle("Adding stickers")
                 .setMessage(
@@ -113,7 +115,8 @@ class MainActivity : Activity() {
                         "• Share: share images or GIFs from any app to \"Add to sticker pack\".\n\n" +
                         "• Files: Add files inside a pack.\n\n" +
                         "Export all writes every pack as a .stickerpack plus catalog.json into one " +
-                        "folder — upload that folder anywhere static for Palette to install from.",
+                        "folder — upload that folder anywhere static for the Palette plugin for " +
+                        "Obsidian to install from.",
                 )
                 .setPositiveButton("OK", null)
                 .show()
@@ -135,9 +138,9 @@ class MainActivity : Activity() {
             .setMessage(
                 "Apps like Messenger turn shared images into photos (transparency becomes black). " +
                     "Stickers sent from a keyboard stay stickers — so this app includes one.\n\n" +
-                    (if (enabled) "It's turned on. " else "1. Turn on \"Palette Stickers\" on the next screen.\n2. ") +
+                    (if (enabled) "It's turned on. " else "1. Turn on \"${getString(R.string.app_name)}\" on the next screen.\n2. ") +
                     "To switch: pull down Quick Settings, tap the pencil/edit button and add the " +
-                    "\"Sticker keyboard\" tile. In any chat, tap the tile and pick Palette Stickers " +
+                    "\"Peelbox keyboard\" tile. In any chat, tap the tile and pick ${getString(R.string.app_name)} " +
                     "(Gboard users can also use Gboard's switch button). Tap a sticker to send it; " +
                     "tap the keyboard icon at its top-left to switch back.",
             )
@@ -172,8 +175,12 @@ class MainActivity : Activity() {
                         val msgs = parsed.map { r ->
                             r.fold(
                                 onSuccess = { (pack, files) ->
-                                    val (p, added) = Library.importPack(pack, files)
-                                    "${p.name}: $added new"
+                                    if (Licensing.canImport(this, pack.id)) {
+                                        val (p, added) = Library.importPack(pack, files)
+                                        "${p.name}: $added new"
+                                    } else {
+                                        "${pack.name}: skipped — unlock Peelbox Unlimited for more than ${Licensing.FREE_PACKS} packs"
+                                    }
                                 },
                                 onFailure = { "Couldn't import: ${it.message}" },
                             )
@@ -209,6 +216,7 @@ class MainActivity : Activity() {
         private const val M_EXPORT_ALL = 3
         private const val M_ABOUT = 4
         private const val M_KEYBOARD = 5
+        private const val M_UNLOCK = 6
         private const val RC_IMPORT = 10
         private const val RC_EXPORT_ALL = 11
     }
