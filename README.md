@@ -1,7 +1,12 @@
-# Palette Stickers
+# Peelbox
 
-A small Android app for curating sticker packs on your phone — including your Samsung custom
-stickers — and exporting them in a format the Palette Obsidian plugin can install.
+An Android app for keeping your own stickers — including Samsung custom/AI stickers — in packs,
+sending them as real stickers through its keyboard, and exporting them in a format the Palette
+Obsidian plugin can install. (Formerly "Palette Stickers".)
+
+**Builds:** `Peelbox Dev` (debug, unlimited, shared key — public `latest` release) and the store
+build (release, 3 free packs + Samsung IAP unlock, private key from CI secrets — workflow artifact
+only). Store launch steps: [`store/GALAXY-STORE-CHECKLIST.md`](store/GALAXY-STORE-CHECKLIST.md).
 
 - **Grab stickers straight from the keyboard.** Open a pack, tap the dashed box, switch the
   Samsung Keyboard to its sticker tab and tap stickers. Each one lands in the pack as the
