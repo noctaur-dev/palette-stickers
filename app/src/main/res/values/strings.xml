@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Palette Stickers</string>
+    <string name="share_label">Add to sticker pack</string>
+    <string name="paste_hint">Tap here, then send stickers from your keyboard — or long-press to paste</string>
+    <string name="empty_packs">No packs yet.\nTap + to make one.</string>
+    <string name="empty_pack">This pack is empty.\nTap the box above and send stickers from the Samsung Keyboard, share images here from any app, or use Add files.</string>
+</resources>

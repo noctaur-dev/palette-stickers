@@ -1,0 +1,13 @@
+<resources>
+    <!-- DeviceDefault = One UI's own look on Samsung; DayNight follows the system dark mode. -->
+    <style name="Theme.Stickers" parent="@android:style/Theme.DeviceDefault.DayNight" />
+
+    <style name="Theme.Stickers.Transparent">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+</resources>

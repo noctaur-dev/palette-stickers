@@ -1,0 +1,13 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- A sticker with a peeled corner and a little face -->
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M39,31 H69 A8,8 0 0 1 77,39 V61 L61,77 H39 A8,8 0 0 1 31,69 V39 A8,8 0 0 1 39,31 Z" />
+    <path android:fillColor="#D6CFFA"
+        android:pathData="M77,61 L61,77 V67 A6,6 0 0 1 67,61 Z" />
+    <path android:fillColor="#6B5BD6"
+        android:pathData="M43,48 a3.2,3.2 0 1 0 6.4,0 a3.2,3.2 0 1 0 -6.4,0 Z M58.6,48 a3.2,3.2 0 1 0 6.4,0 a3.2,3.2 0 1 0 -6.4,0 Z" />
+    <path android:strokeColor="#6B5BD6" android:strokeWidth="3.2" android:strokeLineCap="round"
+        android:pathData="M45,57 Q54,65 63,57" />
+</vector>

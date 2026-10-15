@@ -1,0 +1,7 @@
+<resources>
+    <color name="icon_bg">#6B5BD6</color>
+    <color name="tile">#14808080</color>
+    <color name="card">#1C808080</color>
+    <color name="paste_fill">#0F808080</color>
+    <color name="paste_stroke">#99808080</color>
+</resources>
