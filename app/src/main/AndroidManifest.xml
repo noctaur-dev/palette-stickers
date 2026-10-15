@@ -50,6 +50,20 @@
             </intent-filter>
         </activity>
 
+        <!-- Sticker keyboard: sends stickers the way a keyboard does, so apps show them as stickers. -->
+        <service
+            android:name=".StickerKeyboard"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_INPUT_METHOD">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/method" />
+        </service>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.files"

@@ -200,20 +200,28 @@ class PackActivity : Activity() {
     }
 
     private fun more(s: Sticker) {
-        val options = arrayOf("Move to another pack…", "Use as pack cover", "Share this sticker", "Select multiple")
+        val options = arrayOf("Copy", "Move to another pack…", "Use as pack cover", "Share as image", "Select multiple")
         AlertDialog.Builder(this)
             .setItems(options) { _, which ->
                 when (which) {
-                    0 -> moveToPack(setOf(s.id))
-                    1 -> {
+                    0 -> copySticker(s)
+                    1 -> moveToPack(setOf(s.id))
+                    2 -> {
                         Library.setCover(pack, s.id)
                         showStatus("Cover updated")
                     }
-                    2 -> shareSticker(s)
-                    3 -> startSelection(s.id)
+                    3 -> shareSticker(s)
+                    4 -> startSelection(s.id)
                 }
             }
             .show()
+    }
+
+    private fun copySticker(s: Sticker) {
+        val uri = androidx.core.content.FileProvider.getUriForFile(this, "$packageName.files", Library.file(pack, s))
+        val cm = getSystemService(android.content.ClipboardManager::class.java)
+        cm.setPrimaryClip(android.content.ClipData.newUri(contentResolver, "Sticker", uri))
+        showStatus("Copied — paste it anywhere that accepts images")
     }
 
     private fun shareSticker(s: Sticker) {

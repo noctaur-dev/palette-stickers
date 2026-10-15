@@ -79,7 +79,8 @@ class MainActivity : Activity() {
             .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         menu.add(0, M_IMPORT, 1, "Import .stickerpack")
         menu.add(0, M_EXPORT_ALL, 2, "Export all + catalog…")
-        menu.add(0, M_ABOUT, 3, "How to add stickers")
+        menu.add(0, M_KEYBOARD, 3, "Sticker keyboard setup")
+        menu.add(0, M_ABOUT, 4, "How to add stickers")
         return true
     }
 
@@ -102,6 +103,7 @@ class MainActivity : Activity() {
                     startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT_TREE), RC_EXPORT_ALL)
                 }
             }
+            M_KEYBOARD -> keyboardSetup()
             M_ABOUT -> android.app.AlertDialog.Builder(this)
                 .setTitle("Adding stickers")
                 .setMessage(
@@ -118,6 +120,34 @@ class MainActivity : Activity() {
             else -> return super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    private fun keyboardEnabled(): Boolean {
+        val imm = getSystemService(android.view.inputmethod.InputMethodManager::class.java)
+        return imm.enabledInputMethodList.any { it.packageName == packageName }
+    }
+
+    /** Messenger & co. only show an image as a sticker when a keyboard sends it — hence the keyboard. */
+    private fun keyboardSetup() {
+        val enabled = keyboardEnabled()
+        android.app.AlertDialog.Builder(this)
+            .setTitle("Sticker keyboard")
+            .setMessage(
+                "Apps like Messenger turn shared images into photos (transparency becomes black). " +
+                    "Stickers sent from a keyboard stay stickers — so this app includes one.\n\n" +
+                    (if (enabled) "It's turned on. " else "1. Turn on \"Palette Stickers\" on the next screen.\n2. ") +
+                    "In any chat, tap the keyboard-switch button (bottom corner of the screen) and pick " +
+                    "Palette Stickers. Tap a sticker to send it; tap the keyboard icon to switch back.",
+            )
+            .setPositiveButton(if (enabled) "Switch keyboard now" else "Turn it on") { _, _ ->
+                if (enabled) {
+                    getSystemService(android.view.inputmethod.InputMethodManager::class.java).showInputMethodPicker()
+                } else {
+                    startActivity(Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS))
+                }
+            }
+            .setNegativeButton("Close", null)
+            .show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -176,6 +206,7 @@ class MainActivity : Activity() {
         private const val M_IMPORT = 2
         private const val M_EXPORT_ALL = 3
         private const val M_ABOUT = 4
+        private const val M_KEYBOARD = 5
         private const val RC_IMPORT = 10
         private const val RC_EXPORT_ALL = 11
     }
